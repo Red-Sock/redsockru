@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import {PropType, ref} from "vue";
+import {getFontSizePx} from "@/service/fint_size.ts";
 
 const CIRCLE_FADES = 'circle-fades';
 const RECT_AXIS_MOVE_ANIM = {
@@ -58,7 +59,7 @@ interface diagRect {
   cy: number,
 }
 
-const diagRects = ref<diagRect[]>([]) // rects that is rendered diagonally
+const logoDiagRects = ref<diagRect[]>([]) // rects that is rendered diagonally
 let logoRects: rect[] = [] // same as above but used for final logo draw
 
 // in ems
@@ -73,8 +74,11 @@ const directions = [
   'rect-to-top-and-hide',
 ]
 
-const fontSize = 16
 
+const fontSize = getFontSizePx()
+window.addEventListener("resize", function() {
+  buildLogo()
+});
 
 function loop() {
   addRect()
@@ -137,6 +141,7 @@ function addRect() {
 
 function buildLogo() {
   logoRects = []
+  logoDiagRects.value = []
   for (let idx in props.stripes) {
     if (props.stripes[idx].x !== props.stripes[idx].x_to &&
         props.stripes[idx].y !== props.stripes[idx].y_to) {
@@ -147,7 +152,7 @@ function buildLogo() {
           getMoveRectAngle(props.stripes[idx]),
       )
 
-      diagRects.value.push(diagRec)
+      logoDiagRects.value.push(diagRec)
       continue
     }
     const axisAnim = getAxisAnimation(props.stripes[idx])
@@ -220,8 +225,8 @@ function createDiagRect(x: number, y: number, angle: number): diagRect {
     cy: 0,
   }
 
-  dr.cx = (dr.x + (dr.width / 2)) * fontSize
-  dr.cy = (dr.y - (radius / 2)) * fontSize
+  dr.cx = (dr.x + (dr.width / 2)) * fontSize.value
+  dr.cy = (dr.y - (radius / 2)) * fontSize.value
 
   return dr
 }
@@ -277,8 +282,8 @@ function fillCircles() {
   <svg
       :id="'logo-animation-field-'+uniqueName"
       ref="logo-animation-field"
-      :width="2 + (radius*2 + 2.5)*width + 'em'"
-      :height="2 + (radius*2 + 2.5)*height + 'em'"
+      :width="width*(radius*2 + 2.5) + 'em'"
+      :height="height*(radius*2 + 2.5) + 'em'"
       class="bordered">
 
     <rect v-for="(rct) in rectsDrawn"
@@ -303,7 +308,7 @@ function fillCircles() {
           :class="'rect speed-rect ' + rct.additionalClassName"
     />
 
-    <rect v-for="(rct, i) in diagRects"
+    <rect v-for="(rct, i) in logoDiagRects"
           :key="'diag-rect'+i"
           :x="rct.x+'em'"
           :y="rct.y+'em'"
