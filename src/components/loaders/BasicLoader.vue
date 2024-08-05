@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {PropType, ref} from "vue";
 
 const CIRCLE_FADES = 'circle-fades';
 const RECT_AXIS_MOVE_ANIM = {
@@ -10,11 +10,18 @@ const RECT_AXIS_MOVE_ANIM = {
   TO_RIGHT: 'rect-to-right',
 };
 
+export interface stripe {
+  x: number,
+  y: number,
+  x_to: number,
+  y_to: number,
+}
+
 const props = defineProps({
   uniqueName: String,
-  width: Number,
-  height: Number,
-  stripes: Array,
+  width: {type: Number, required: true},
+  height: {type: Number, required: true},
+  stripes: {type: Object as PropType<stripe[]>, required: true},
   backgroundColor: String,
   isLoading: Boolean,
 })
@@ -26,20 +33,32 @@ interface rect {
   height: number, // in ems
   additionalClassName: string // defines direction
 }
+
 let rectsDrawn = ref<rect[]>([])
 
 interface circle {
-  x: number,
-  y: number,
-  additionalClassName: number,
+  x: string,
+  y: string,
+  additionalClassName: string,
 }
+
 let circlesDrawn: circle[] = []
 
 const animationLengthMS = 1200
 const animationLengthMScss = animationLengthMS + 'ms'
 const animationLengthMScssSlow = animationLengthMS * 2 + 'ms'
 
-const diagRects = ref<rect[]>([]) // rects that is rendered diagonally
+interface diagRect {
+  x: number,
+  y: number,
+  angle: number,
+  width: number,
+  height: number,
+  cx: number,
+  cy: number,
+}
+
+const diagRects = ref<diagRect[]>([]) // rects that is rendered diagonally
 let logoRects: rect[] = [] // same as above but used for final logo draw
 
 // in ems
@@ -122,10 +141,13 @@ function buildLogo() {
     if (props.stripes[idx].x !== props.stripes[idx].x_to &&
         props.stripes[idx].y !== props.stripes[idx].y_to) {
 
-      diagRects.value.push(createDiagRect(
+      const diagRec = createDiagRect(
           props.stripes[idx].x,
           props.stripes[idx].y,
-          getMoveRectAngle(props.stripes[idx])))
+          getMoveRectAngle(props.stripes[idx]),
+      )
+
+      diagRects.value.push(diagRec)
       continue
     }
     const axisAnim = getAxisAnimation(props.stripes[idx])
@@ -136,8 +158,6 @@ function buildLogo() {
 
     logoRects.push(createSimpleRect(props.stripes[idx].x, props.stripes[idx].y, axisAnim))
   }
-
-  createDiagRect()
 
   setTimeout(() => {
     if (!props.stripes) {
@@ -159,7 +179,7 @@ function buildLogo() {
 fillCircles()
 loop()
 
-function getMoveRectAngle(stripe) {
+function getMoveRectAngle(stripe: stripe): number {
   if (stripe.x < stripe.x_to && stripe.y < stripe.y_to) {
     return -45
   }
@@ -171,13 +191,10 @@ function getMoveRectAngle(stripe) {
   if (stripe.x > stripe.x_to && stripe.y > stripe.y_to) {
     return 135
   }
-
-  if (stripe.x > stripe.x_to && stripe.y < stripe.y_to) {
-    return 45
-  }
+  return 45
 }
 
-function createSimpleRect(x, y, animation) {
+function createSimpleRect(x: number, y: number, animation: string) {
   let width = rectW
   let height = rectH
 
@@ -192,22 +209,24 @@ function createSimpleRect(x, y, animation) {
   return {x: x, y: y, width: width, height: height, additionalClassName: animation}
 }
 
-function createDiagRect(x, y, angle) {
-  let diagRect = {
+function createDiagRect(x: number, y: number, angle: number): diagRect {
+  const dr: diagRect = {
     x: 2 + (6.5 * x),
     y: 2 + (6.5 * y) + radius,
     angle: angle,
     width: 2,
     height: 7.1875,
+    cx: 0,
+    cy: 0,
   }
 
-  diagRect.cx = (diagRect.x + (diagRect.width / 2)) * fontSize
-  diagRect.cy = (diagRect.y - (radius / 2)) * fontSize
+  dr.cx = (dr.x + (dr.width / 2)) * fontSize
+  dr.cy = (dr.y - (radius / 2)) * fontSize
 
-  return diagRect
+  return dr
 }
 
-function getAxisAnimation(stripe) {
+function getAxisAnimation(stripe: stripe) {
   let to_right = stripe.x < stripe.x_to
   let to_left = stripe.x > stripe.x_to
   let to_top = stripe.y > stripe.y_to
