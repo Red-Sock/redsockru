@@ -4,7 +4,7 @@
 
 <template>
   <div>
-
+  Русский
   </div>
 </template>
 

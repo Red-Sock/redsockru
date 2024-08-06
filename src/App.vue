@@ -23,10 +23,8 @@ setTimeout(() => isLoading.value = false, 2000)
 
 <style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -36,6 +34,16 @@ setTimeout(() => isLoading.value = false, 2000)
 
   width: 100%;
   height: 100%;
+}
+
+* {
+  font-family: Perun, sans-serif;
+}
+
+@font-face {
+  font-family: "Perun";
+  src: local("Perun"),
+  url(./fonts/Perun.ttf) format("truetype");
 }
 
 </style>
