@@ -5,19 +5,19 @@ import {ref} from "vue";
 import HomePage from "@/pages/HomePage.vue";
 import MainLoader from "@/components/loaders/MainLoader.vue";
 
-const isLoading = ref<Boolean>(true)
+const isLoading = ref<Boolean>(false)
 
-setTimeout(() => isLoading.value = false, 2000)
-
+// setTimeout(() => isLoading.value = false, 2000)
 </script>
 
 <template>
+    <HomePage/>
+
     <MainLoader
-        v-show="isLoading"
+        v-if="isLoading"
         :isLoading=isLoading
     />
 
-  <HomePage v-show="!isLoading"/>
 </template>
 
 
@@ -31,19 +31,7 @@ setTimeout(() => isLoading.value = false, 2000)
   align-items: center;
   box-sizing: border-box;
   flex-direction: column;
-
   width: 100%;
   height: 100%;
 }
-
-* {
-  font-family: Perun, sans-serif;
-}
-
-@font-face {
-  font-family: "Perun";
-  src: local("Perun"),
-  url(./fonts/Perun.ttf) format("truetype");
-}
-
 </style>

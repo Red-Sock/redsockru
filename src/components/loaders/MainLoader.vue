@@ -79,6 +79,7 @@ const isLoading = defineModel('isLoading', {type: Boolean, default: true})
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-size: 0.5em;
 }
 
 

@@ -77,7 +77,7 @@ const directions = [
 
 const fontSize = getFontSizePx()
 window.addEventListener("resize", function() {
-  buildLogo()
+  loop()
 });
 
 function loop() {
@@ -338,7 +338,6 @@ function fillCircles() {
     />
   </svg>
 </template>
-
 
 <style scoped>
 .bordered {
