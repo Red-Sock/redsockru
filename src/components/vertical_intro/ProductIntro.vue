@@ -34,6 +34,7 @@ function MouseLeft(): void {
 }
 
 const isMob = isMobile()
+
 </script>
 
 <template>
@@ -44,6 +45,13 @@ const isMob = isMobile()
       :style="{
         flex: isSelected ? 5 : 4,
         flexDirection: isMob ? 'row' : 'column',
+        justifyContent: isMob?'flex-start':'center',
+        backgroundPosition:
+          (props.vertical == verticals.Ruf) ? (isMob ? 'center bottom -8em' : 'center') :
+
+            props.vertical == verticals.RedSock ? (isMob ? 'center top -2em' : 'center') :
+            props.vertical == verticals.Verv ? (isMob ? 'center top -8em' : 'center') : 'center',
+        backgroundSize: 'cover',
       }"
   >
 
@@ -52,7 +60,6 @@ const isMob = isMobile()
         :style="{
          color: isSelected ? selectedHeaderColor : defaultHeaderColor,
          fontSize: isSelected? '1.125em': '1em',
-         width: isSelected ? '100%' : '',
        }"
     >
       {{ vertical }}
@@ -61,7 +68,6 @@ const isMob = isMobile()
     <div
         class="underscore"
         :style="{
-
               width: isMob ? '1px': '80%',
               height: isMob ? '80%': '1px',
               marginTop: isMob ? '':'4px',
@@ -100,9 +106,6 @@ const isMob = isMobile()
   justify-content: center;
 
   transition: all 0.25s linear;
-
-  background-position: center;
-  background-size: cover;
 }
 
 
@@ -113,8 +116,8 @@ const isMob = isMobile()
   transition: all 0.1s linear;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  width: 20vw;
 }
 
 .underscore {
@@ -124,7 +127,7 @@ const isMob = isMobile()
 .description {
   overflow: hidden;
 
-  font-size: 0.35em;
+  font-size: 0.5em;
   display: flex;
   flex-direction: column;
   max-width: 30vw;
