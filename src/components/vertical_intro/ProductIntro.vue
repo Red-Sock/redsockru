@@ -1,29 +1,27 @@
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {PropType, ref} from "vue";
+import {verticals} from "@/entities/verticals.ts";
 
 const props = defineProps({
-  name: {type: String, required: true},
+  vertical: {type: Object as PropType<verticals>, required: true},
 })
 
 const defaultHeaderColor = "wheat"
 const selectedHeaderColor = "pink"
 const isSelected = ref<boolean>(false)
 
-let backgroundClass = ''
+let backgroundClass: string | undefined;
+const verticalsToBackgroundClass = new Map<verticals, string>()
+verticalsToBackgroundClass.set(verticals.RedSock,'redsock-background')
+verticalsToBackgroundClass.set(verticals.Ruf, 'ruf-background')
+verticalsToBackgroundClass.set(verticals.Verv, 'verv-background')
 
-switch (props.name) {
-  case 'RedSock':
-    backgroundClass = 'redsock-background';
-    break;
-  case 'Ruf':
-    backgroundClass = 'ruf-background';
-    break;
-  case 'Verv':
-    backgroundClass = 'verv-background';
-    break;
+backgroundClass = verticalsToBackgroundClass.get(props.vertical)
+
+if (!backgroundClass) {
+  backgroundClass = 'unknown'
 }
-
 function MouseEntered(): void {
   isSelected.value = true
 }
@@ -52,7 +50,7 @@ function MouseLeft(): void {
          width: isSelected ? '100%' : '',
        }"
     >
-      {{ name }}
+      {{ vertical }}
     </div>
 
     <div class="underscore"/>
@@ -104,4 +102,7 @@ function MouseLeft(): void {
   background-image: url("@/assets/verticals/verv.jpg");
 }
 
+.unknown {
+  background-image: url("@/assets/verticals/unknown.jpg");
+}
 </style>

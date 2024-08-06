@@ -1,20 +1,19 @@
 <script setup lang="ts">
 
 import ProductIntro from "@/components/vertical_intro/ProductIntro.vue";
-
-
+import {verticals} from "@/entities/verticals.ts";
 </script>
 
 <template>
   <div class="verticals">
       <ProductIntro
-          name="RedSock"/>
+          :vertical="verticals.RedSock"/>
 
       <ProductIntro
-          name="Ruf"/>
+          :vertical="verticals.Ruf"/>
 
       <ProductIntro
-          name="Verv"/>
+          :vertical="verticals.Verv"/>
   </div>
 </template>
 
