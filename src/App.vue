@@ -5,19 +5,23 @@ import {ref} from "vue";
 import HomePage from "@/pages/HomePage.vue";
 import MainLoader from "@/components/loaders/MainLoader.vue";
 
-const isLoading = ref<Boolean>(false)
+const isLoading = ref<Boolean>(true)
 
-// setTimeout(() => isLoading.value = false, 2000)
+setTimeout(() => isLoading.value = false, 2000)
 </script>
 
 <template>
-    <HomePage/>
+  <transition name="content-transition">
+    <div
+        class="content"
+        v-show="!isLoading">
+            <HomePage />
+    </div>
+  </transition>
 
     <MainLoader
-        v-if="isLoading"
         :isLoading=isLoading
     />
-
 </template>
 
 
@@ -25,13 +29,23 @@ const isLoading = ref<Boolean>(false)
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  flex-direction: column;
+}
+
+.content {
   width: 100%;
   height: 100%;
 }
+
+.content-transition-enter-from {
+ opacity: 0;
+}
+.content-transition-enter-to {
+  opacity: 1;
+}
+
+.content-transition-enter-active {
+  transition: opacity 0.5s;
+  transition-delay: 3s;
+}
+
 </style>
