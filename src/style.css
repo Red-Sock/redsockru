@@ -14,15 +14,28 @@ body {
     font-family: Perun, sans-serif;
 }
 
+/*Mobile*/
 @media (max-width: 800px) {
     body {
         font-size: 16px;
+        --verticals-flex-direction: column;
+
+        --verticals-intro-flex-direction: row;
+        --verticals-intro-line-width: 1px;
+        --verticals-intro-line-height: 80%;
     }
+
 }
 
+/*Desktop*/
 @media (min-width: 800px) {
     body {
         font-size: 32px;
+        --verticals-flex-direction: row;
+
+        --verticals-intro-flex-direction: column;
+        --verticals-intro-line-width: 80%;
+        --verticals-intro-line-height: 1px;
     }
 }
 
@@ -31,3 +44,5 @@ body {
     src: local("Perun"),
     url(./fonts/Perun.ttf) format("truetype");
 }
+
+

@@ -18,14 +18,12 @@ import {verticals} from "@/entities/verticals.ts";
 </template>
 
 <style scoped>
-
 .verticals {
   display: flex;
   width: 100%;
-  height: 100%;
 
-  flex-direction: row;
   justify-content: center;
+  flex-direction: var(--verticals-flex-direction);
 }
 
 .verticals > * {
@@ -33,27 +31,4 @@ import {verticals} from "@/entities/verticals.ts";
   height: 100%;
 }
 
-.red-sock-vert {
-  background-image: url("@/assets/verticals/redsock.jpg");
-  background-position: center;
-  background-size: cover;
-
-  flex: 1;
-}
-
-.ruf-vert{
-  background-image: url("@/assets/verticals/raf.jpg");
-  background-position: center;
-  background-size: cover;
-
-  flex: 1;
-}
-
-.verv-vert{
-  background-position: center;
-  background-size: cover;
-  background-image: url("@/assets/verticals/verv.jpg");
-
-  flex: 1;
-}
 </style>

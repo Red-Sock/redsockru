@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {PropType, ref} from "vue";
-import {getFontSizePx} from "@/service/fint_size.ts";
+import {getFontSizePx} from "@/service/font_size.ts";
 
 const CIRCLE_FADES = 'circle-fades';
 const RECT_AXIS_MOVE_ANIM = {
