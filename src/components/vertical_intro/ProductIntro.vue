@@ -6,6 +6,7 @@ import {isMobile} from "@/service/font_size.ts";
 
 const props = defineProps({
   vertical: {type: String as PropType<verticals>, required: true},
+  description: {type: String, required: true}
 })
 
 const defaultHeaderColor = "wheat"
@@ -87,9 +88,7 @@ const isMob = isMobile()
                (isSelected ? (`translateX(0%)`):(`translateX(-100%)`)) :
                (isSelected ? (`translateY(0%)`):(`translateY(-100%)`)),
             }">
-        Так как процентные размеры вычисляются относительно значений родительских элементов, то необходимо установить
-        соответствующие значения для каждого элемента DOM. Единица измерения vh не требует установки значений по
-        цепочке, так как её значение вычисляется напрямую относительно окна браузера:
+        {{description}}
       </p>
     </div>
   </div>
