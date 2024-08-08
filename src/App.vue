@@ -5,7 +5,7 @@ import {ref} from "vue";
 import HomePage from "@/pages/HomePage.vue";
 import MainLoader from "@/components/loaders/MainLoader.vue";
 
-const isLoading = ref<Boolean>(true)
+const isLoading = ref<boolean>(true)
 
 setTimeout(() => isLoading.value = false, 2000)
 </script>
