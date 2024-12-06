@@ -28,6 +28,6 @@ jobs:
           access_key: ${{ secrets.MINIO_ACCESS_KEY }}
           secret_key: ${{ secrets.MINIO_SECRET_KEY }}
           bucket: 'redsock-ru'
-          local_path: './dist'
+          local_path: './dist/*'
           remote_path: '/'
           recursive: true
