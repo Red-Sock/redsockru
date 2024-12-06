@@ -107,6 +107,10 @@ const isMob = isMobile()
   transition: all 0.25s linear;
 }
 
+.product-intro:hover {
+  cursor: pointer;
+}
+
 
 .product-name {
   flex-direction: column;

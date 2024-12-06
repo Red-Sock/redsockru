@@ -2,6 +2,7 @@
 
 import ProductIntro from "@/components/vertical_intro/ProductIntro.vue";
 import {verticals} from "@/entities/verticals.ts";
+
 </script>
 
 <template>
