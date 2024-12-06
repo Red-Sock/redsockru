@@ -22,7 +22,7 @@ jobs:
             yarn build
 
       - name: Minio Deploy
-        uses: marverlous/minio-upload@latest
+        uses: marverlous811/minio-upload@v1.2.0
         with:
           endpoint: ${{ secrets.MINIO_ENDPOINT }}
           access_key: ${{ secrets.MINIO_ACCESS_KEY }}
