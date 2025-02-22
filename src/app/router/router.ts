@@ -7,8 +7,6 @@ const routes = [
     { path: Routes.Home, component: HomePage },
 ]
 
-
-
 export default createRouter({
     history: createMemoryHistory(),
     routes,
