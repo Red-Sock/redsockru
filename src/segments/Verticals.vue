@@ -1,8 +1,8 @@
 <script setup lang="ts">
-
-import ProductIntro from "@/components/vertical_intro/ProductIntro.vue";
-import {Vertical} from "@/entities/vertical.ts";
 import {defineEmits} from 'vue'
+
+import {Vertical} from "@/entities/vertical.ts";
+import ProductIntro from "@/components/vertical_intro/ProductIntro.vue";
 
 const emit = defineEmits(['openVertical'])
 
@@ -43,7 +43,6 @@ function openVertical(vertical: Vertical) {
   width: 100%;
 
   justify-content: center;
-  flex-direction: var(--verticals-flex-direction);
 
   transition: all 0.29s linear;
 }
@@ -74,9 +73,34 @@ function openVertical(vertical: Vertical) {
   background-image: url("@/assets/verticals/verv.jpg");
 }
 
-.unknown-background {
-  background-image: url("@/assets/verticals/unknown.jpg");
+/*Mobile*/
+@media (max-width: 800px) {
+  .verticals {
+    flex-direction: column;
+  }
+
+  .redsock-background {
+    background-position: center top -2em;
+  }
+
+  .ruf-background {
+    background-position: center bottom -8em;
+  }
+
+  .verv-background {
+    background-position: top;
+  }
 }
 
+/*Desktop*/
+@media (min-width: 800px) {
+  .verticals {
+    flex-direction: row;
+  }
+
+  .redsock-background, .ruf-background, .verv-background {
+    background-position: center;
+  }
+}
 
 </style>

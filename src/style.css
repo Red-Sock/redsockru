@@ -16,29 +16,6 @@ body {
     font-size: clamp(16px, 5vw, 5vh);
 }
 
-/*Mobile*/
-@media (max-width: 800px) {
-    body {
-        --verticals-flex-direction: column;
-
-        --verticals-intro-flex-direction: row;
-        --verticals-intro-line-width: 1px;
-        --verticals-intro-line-height: 80%;
-    }
-
-}
-
-/*Desktop*/
-@media (min-width: 800px) {
-    body {
-        --verticals-flex-direction: row;
-
-        --verticals-intro-flex-direction: column;
-        --verticals-intro-line-width: 80%;
-        --verticals-intro-line-height: 1px;
-    }
-}
-
 @font-face {
     font-family: "Perun";
     src: local("Perun"),

@@ -16,9 +16,5 @@ export function getFontSizePx(): Ref<number> {
     return fontSize
 }
 
-export function isMobile(): Ref<boolean> {
-    return isMob
-}
-
 window.addEventListener("resize", resize)
 resize()
