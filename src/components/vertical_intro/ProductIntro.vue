@@ -1,37 +1,25 @@
 <script setup lang="ts">
 
-import {PropType, ref} from "vue";
-import {verticals} from "@/entities/verticals.ts";
+import {PropType} from "vue";
+import {Vertical} from "@/entities/vertical.ts";
 import {isMobile} from "@/service/font_size.ts";
 
 const props = defineProps({
-  vertical: {type: String as PropType<verticals>, required: true},
+  vertical: {type: String as PropType<Vertical>, required: true},
   description: {type: String, required: true}
 })
 
-const defaultHeaderColor = "wheat"
-const selectedHeaderColor = "pink"
-const isSelected = ref<boolean>(false)
-
 
 let backgroundClass: string | undefined;
-const verticalsToBackgroundClass = new Map<verticals, string>()
-verticalsToBackgroundClass.set(verticals.RedSock, 'redsock-background')
-verticalsToBackgroundClass.set(verticals.Ruf, 'ruf-background')
-verticalsToBackgroundClass.set(verticals.Verv, 'verv-background')
+const verticalsToBackgroundClass = new Map<Vertical, string>()
+verticalsToBackgroundClass.set(Vertical.RedSock, 'redsock-background')
+verticalsToBackgroundClass.set(Vertical.Ruf, 'ruf-background')
+verticalsToBackgroundClass.set(Vertical.Verv, 'verv-background')
 
 backgroundClass = verticalsToBackgroundClass.get(props.vertical)
 
 if (!backgroundClass) {
   backgroundClass = 'unknown-background'
-}
-
-function MouseEntered(): void {
-  isSelected.value = true
-}
-
-function MouseLeft(): void {
-  isSelected.value = false
 }
 
 const isMob = isMobile()
@@ -40,29 +28,17 @@ const isMob = isMobile()
 
 <template>
   <div
-      @mouseenter="MouseEntered"
-      @mouseleave="MouseLeft"
-      :class="'product-intro '+ backgroundClass"
+      class="product-intro"
       :style="{
-        flex: isSelected ? 5 : 4,
         flexDirection: isMob ? 'row' : 'column',
-        justifyContent: isMob?'flex-start':'center',
         backgroundPosition:
-          (props.vertical == verticals.Ruf) ? (isMob ? 'center bottom -8em' : 'center') :
-
-            props.vertical == verticals.RedSock ? (isMob ? 'center top -2em' : 'center') :
-            props.vertical == verticals.Verv ? (isMob ? 'center top -8em' : 'center') : 'center',
-        backgroundSize: 'cover',
+          (props.vertical == Vertical.Ruf) ? (isMob ? 'center bottom -8em' : 'center') :
+            props.vertical == Vertical.RedSock ? (isMob ? 'center top -2em' : 'center') :
+            props.vertical == Vertical.Verv ? (isMob ? 'center top -8em' : 'center') : 'center'
       }"
   >
 
-    <div
-        class="product-name"
-        :style="{
-         color: isSelected ? selectedHeaderColor : defaultHeaderColor,
-         fontSize: isSelected? '1.125em': '1em',
-       }"
-    >
+    <div class="product-name">
       {{ vertical }}
     </div>
 
@@ -76,19 +52,11 @@ const isMob = isMobile()
               marginLeft: !isMob ? '':'4px',
               marginRight: !isMob ? '':'4px',
         }"
-
     />
 
-    <div
-        class="description"
-    >
-      <p
-          :style="{
-            transform: isMob ?
-               (isSelected ? (`translateX(0%)`):(`translateX(-100%)`)) :
-               (isSelected ? (`translateY(0%)`):(`translateY(-100%)`)),
-            }">
-        {{description}}
+    <div class="description">
+      <p>
+        {{ description }}
       </p>
     </div>
   </div>
@@ -105,12 +73,15 @@ const isMob = isMobile()
   justify-content: center;
 
   transition: all 0.25s linear;
+  box-sizing: border-box;
+
+  border: black solid 2px;
 }
 
-.product-intro:hover {
+.product-intro:hover .product-name {
   cursor: pointer;
+  color: pink;
 }
-
 
 .product-name {
   flex-direction: column;
@@ -120,7 +91,8 @@ const isMob = isMobile()
 
   display: flex;
   align-items: center;
-  width: 20vw;
+  color: wheat;
+  width: 100%;
 }
 
 .underscore {
@@ -133,36 +105,28 @@ const isMob = isMobile()
   font-size: 0.5em;
   display: flex;
   flex-direction: column;
-  max-width: 30vw;
   box-sizing: border-box;
 
   text-align: center;
+
+}
+
+.description > p {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-intro:hover .description > p {
+  transform: translateY(0%);
 }
 
 .description > p {
   margin: 0;
-  padding-top: 0.5em;
-  transition: all 0.29s linear;
+  padding: 0;
   color: black;
   background-color: rgba(255, 255, 255, 0.55);
-}
-
-
-/* Backgrounds */
-.redsock-background {
-  background-image: url("@/assets/verticals/redsock.jpg");
-}
-
-.ruf-background {
-  background-image: url("@/assets/verticals/raf.jpg");
-}
-
-.verv-background {
-  background-image: url("@/assets/verticals/verv.jpg");
-}
-
-.unknown-background {
-  background-image: url("@/assets/verticals/unknown.jpg");
+  box-sizing: border-box;
+  max-width: 30vw;
 }
 
 </style>

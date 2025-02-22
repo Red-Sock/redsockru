@@ -1,27 +1,24 @@
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {useLoaderState} from "@/app/store/loader.ts";
 
-import HomePage from "@/pages/HomePage.vue";
 import MainLoader from "@/components/loaders/MainLoader.vue";
+import {RouterView} from 'vue-router';
 
-const isLoading = ref<boolean>(true)
+const loader = useLoaderState();
+loader.spinMainLoader();
 
-setTimeout(() => isLoading.value = false, 2000)
+setTimeout(loader.stopMainLoader, 2000);
 </script>
 
 <template>
   <transition name="content-transition">
-    <div
-        class="content"
-        v-show="!isLoading">
-            <HomePage />
-    </div>
+    <router-view></router-view>
   </transition>
 
-    <MainLoader
-        :isLoading=isLoading
-    />
+  <MainLoader
+      :isLoading=loader.isMainLoading
+  />
 </template>
 
 
@@ -37,8 +34,9 @@ setTimeout(() => isLoading.value = false, 2000)
 }
 
 .content-transition-enter-from {
- opacity: 0;
+  opacity: 0;
 }
+
 .content-transition-enter-to {
   opacity: 1;
 }
