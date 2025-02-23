@@ -7,15 +7,16 @@ import AboutVerv from "@/segments/AboutVerv.vue";
 import {Vertical} from "@/entities/vertical.ts";
 import {onMounted, useTemplateRef} from "vue";
 
-const aboutRedsock = useTemplateRef<HTMLElement>('about-redsock');
-const aboutRuf = useTemplateRef<HTMLElement>('about-ruf');
-const aboutVerv = useTemplateRef<HTMLElement>('about-verv');
-onMounted(()=>{
+onMounted(() => {
   window.scrollTo(0, 0)
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
 })
+
+const aboutRedsock = useTemplateRef<HTMLElement>('about-redsock');
+const aboutRuf = useTemplateRef<HTMLElement>('about-ruf');
+const aboutVerv = useTemplateRef<HTMLElement>('about-verv');
 
 function moveToDescription(vertical: Vertical) {
   switch (vertical) {
