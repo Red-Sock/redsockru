@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import BasicLoader from "@/components/loaders/BasicLoader.vue";
+import {useLoaderState} from "@/app/store/loader.ts";
 
 const bricks = [
   // Карта логотип
@@ -47,15 +48,18 @@ const bricks = [
   {x: 6, y: 4, x_to: 7, y_to: 5},
   {x: 6, y: 4, x_to: 6, y_to: 5},
 ]
-const isLoading = defineModel('isLoading', {type: Boolean, default: true})
+const isLoading = useLoaderState()
 
 </script>
 
 <template>
   <transition name="loader-transition">
-    <div class="loader-static" v-show="isLoading">
+    <div
+        class="loader-static"
+        v-show="isLoading.isMainLoading">
       <BasicLoader
-          :isLoading="isLoading"
+          @animation-done="()=>isLoading.setMainLoaded(true)"
+          :isLoading="isLoading.isMainLoading"
           :height="6"
           :width="8"
           :stripes="bricks"

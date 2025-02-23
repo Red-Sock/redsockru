@@ -1,7 +1,14 @@
 <script setup lang="ts">
 
-import {PropType, ref} from "vue";
+import {PropType, ref, defineEmits} from "vue";
 import {getFontSizePx} from "@/service/font_size.ts";
+
+
+const emit = defineEmits(['animationDone'])
+
+function emitDone() {
+  emit('animationDone')
+}
 
 const CIRCLE_FADES = 'circle-fades';
 const RECT_AXIS_MOVE_ANIM = {
@@ -169,6 +176,8 @@ function buildLogo() {
       return
     }
 
+    setTimeout(emitDone, 1000)
+
     for (let x = 0; x < props.width; x++) {
       for (let y = 0; y < props.height; y++) {
         if (!props.stripes.find(elem =>
@@ -276,7 +285,6 @@ function fillCircles() {
   }
 }
 </script>
-
 
 <template>
   <svg

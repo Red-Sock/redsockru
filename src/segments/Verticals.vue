@@ -53,7 +53,9 @@ function openVertical(vertical: Vertical) {
   background-position: center;
   background-size: cover;
   transition: all 0.25s linear;
-
+}
+.vertical:hover {
+  cursor: pointer;
 }
 
 .vertical:hover {

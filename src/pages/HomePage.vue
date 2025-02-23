@@ -5,23 +5,50 @@ import AboutRedsock from "@/segments/AboutRedsock.vue";
 import AboutRuf from "@/segments/AboutRuf.vue";
 import AboutVerv from "@/segments/AboutVerv.vue";
 import {Vertical} from "@/entities/vertical.ts";
+import {onMounted, useTemplateRef} from "vue";
+
+const aboutRedsock = useTemplateRef<HTMLElement>('about-redsock');
+const aboutRuf = useTemplateRef<HTMLElement>('about-ruf');
+const aboutVerv = useTemplateRef<HTMLElement>('about-verv');
+onMounted(()=>{
+  window.scrollTo(0, 0)
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+})
 
 function moveToDescription(vertical: Vertical) {
-  console.log(vertical)
+  switch (vertical) {
+    case Vertical.RedSock:
+      aboutRedsock.value?.scrollIntoView({behavior: 'smooth'});
+      return
+    case Vertical.Ruf:
+      aboutRuf.value?.scrollIntoView({behavior: 'smooth'});
+      return;
+    case Vertical.Verv:
+      aboutVerv.value?.scrollIntoView({behavior: 'smooth'});
+      return;
+  }
+
 }
+
 
 </script>
 
 <template>
   <div class="home-page">
     <VerticalsSegment
-      @openVertical="moveToDescription"
+        @openVertical="moveToDescription"
     />
-    <div class="">
+    <div ref="about-redsock">
       <AboutRedsock/>
     </div>
-    <AboutRuf/>
-    <AboutVerv/>
+    <div ref="about-ruf">
+      <AboutRuf/>
+    </div>
+    <div ref="about-verv">
+      <AboutVerv/>
+    </div>
   </div>
 </template>
 

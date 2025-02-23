@@ -8,17 +8,24 @@ import {RouterView} from 'vue-router';
 const loader = useLoaderState();
 loader.spinMainLoader();
 
-setTimeout(loader.stopMainLoader, 2000);
+setTimeout(loader.stopMainLoader, 1500);
 </script>
 
 <template>
-  <transition name="content-transition">
-    <router-view></router-view>
-  </transition>
+  <router-view v-slot="{ Component }">
+    <transition
+        name="content-transition"
+        mode="out-in"
+    >
+      <component
+          v-if="loader.isMainLoaded"
+          :is="Component"
+      />
+    </transition>
+  </router-view>
 
-  <MainLoader
-      :isLoading=loader.isMainLoading
-  />
+  <MainLoader/>
+
 </template>
 
 
@@ -28,22 +35,19 @@ setTimeout(loader.stopMainLoader, 2000);
   -moz-osx-font-smoothing: grayscale;
 }
 
-.content {
-  width: 100%;
-  height: 100%;
-}
-
-.content-transition-enter-from {
+.content-transition-enter-from,
+.content-transition-leave-to {
   opacity: 0;
 }
 
-.content-transition-enter-to {
+.content-transition-enter-to,
+.content-transition-leave-from {
   opacity: 1;
 }
 
 .content-transition-enter-active {
-  transition: opacity 0.5s;
-  transition-delay: 3s;
+  transition: opacity 1.5s ease-out;
+  animation-delay: 5s;
 }
 
 </style>
